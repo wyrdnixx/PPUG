@@ -21,7 +21,7 @@ namespace PPUG
 
         public UtilsIngres(Parameters p)
         {
-            ConnectionString = "Host = " + p.DbHost + "; Database = " + p.DbDatabase + "; Uid = " + p.DbUser + "; Pwd =" + p.DbPasswd + ";";
+            ConnectionString = "Host = " + p.DbHost + "; Database = " + p.DbDatabase + "; Uid = " + p.DbUser + "; Pwd =" + p.DbPasswd + "; Date_format = GERMAN";
             connection = new IngresConnection(ConnectionString);
         }
 
@@ -29,10 +29,14 @@ namespace PPUG
 
         public DataTable getSql(String sqlSelect)
         {
+
+            IngresCommand ingCmd = new IngresCommand();
+
             try
             {
+              
+
                 connection.Open();
-                IngresCommand ingCmd = new IngresCommand();
 
                 ingCmd.Connection = Connection;
                 ingCmd.CommandText = sqlSelect;
@@ -49,8 +53,9 @@ namespace PPUG
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                throw;
+                MessageBox.Show(ingCmd.CommandText + "\n\n" + ex.Message);
+                //throw;
+                return null;
             }
             finally
             {

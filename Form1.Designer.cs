@@ -28,14 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnTest = new System.Windows.Forms.Button();
             this.dgvTest = new System.Windows.Forms.DataGridView();
+            this.tbSQL = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTest)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(320, 13);
+            this.btnTest.Location = new System.Drawing.Point(12, 520);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 23);
             this.btnTest.TabIndex = 0;
@@ -46,22 +48,33 @@
             // dgvTest
             // 
             this.dgvTest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTest.Location = new System.Drawing.Point(12, 112);
+            this.dgvTest.Location = new System.Drawing.Point(12, 549);
             this.dgvTest.Name = "dgvTest";
-            this.dgvTest.Size = new System.Drawing.Size(875, 211);
+            this.dgvTest.Size = new System.Drawing.Size(1315, 294);
             this.dgvTest.TabIndex = 1;
+            // 
+            // tbSQL
+            // 
+            this.tbSQL.Location = new System.Drawing.Point(12, 24);
+            this.tbSQL.Multiline = true;
+            this.tbSQL.Name = "tbSQL";
+            this.tbSQL.Size = new System.Drawing.Size(481, 490);
+            this.tbSQL.TabIndex = 2;
+            this.tbSQL.Text = resources.GetString("tbSQL.Text");
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 473);
+            this.ClientSize = new System.Drawing.Size(1339, 855);
+            this.Controls.Add(this.tbSQL);
             this.Controls.Add(this.dgvTest);
             this.Controls.Add(this.btnTest);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dgvTest)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -69,6 +82,7 @@
 
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.DataGridView dgvTest;
+        private System.Windows.Forms.TextBox tbSQL;
     }
 }
 

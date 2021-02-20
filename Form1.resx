@@ -117,4 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tbSQL.Text" xml:space="preserve">
+    <value>select
+ substr(deslong,15),
+x1102sta.wds,
+x1102sta.pat,
+ DATE_FORMAT('01.02.2021','%d.%m.%Y'),
+  case when
+  x1102sta.datf &lt;= '01.02.2021 23:59:59'
+  and x1102sta.datt &gt;=  '01.02.2021 23:59:58'
+  and x8103wds.deslong like 'TimeOfficeKey:%'
+  then x1102sta.pat else 0 end
+  as nacht,
+   case when
+  x1102sta.datf &lt;= '01.02.2021 12:00:01'
+  and x1102sta.datt &gt;=  '01.02.2021 12:00:00'
+  and x8103wds.deslong like 'TimeOfficeKey:%'
+  then x1102sta.pat else 0 end
+  as tag
+from x1102sta
+ left join x8103wds on x1102sta.wds = x8103wds.wds
+ left join x1100pat on x1102sta.pat = x1100pat.pat
+where x8103wds.deslong like 'TimeOfficeKey:7%'
+ and x1100pat.cha in ('FP','KOMP','S','SGL','T-S','T-SGL')
+  and x1102sta.pat not in
+  (select pat from x1100pat 
+	where admerrord is not NULL or reservmk != 0)
+ and 
+  x1102sta.datf &lt;= '01.02.2021 23:59:59'
+  and x1102sta.datt &gt;=  '01.02.2021 00:00:00'
+order by deslong</value>
+  </data>
 </root>

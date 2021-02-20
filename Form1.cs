@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace PPUG
 {
@@ -15,7 +16,7 @@ namespace PPUG
 
         private Parameters p;
         private UtilsIngres utilsIngres;
-        public Form1(Parameters p , UtilsIngres utilsIngres)
+        public Form1(Parameters p, UtilsIngres utilsIngres)
         {
             InitializeComponent();
 
@@ -28,10 +29,19 @@ namespace PPUG
         private void btnTest_Click(object sender, EventArgs e)
         {
 
-            String testSelect = "select * from x1100pat where namechr like '%Hehn%'";
+            String testSelect = tbSQL.Text;
+            string SQlDate = DateTime.Today.ToString("d");
+
+            //MessageBox.Show();
+
+            testSelect = testSelect.Replace("$BDGPC_STARTDATE", SQlDate);
+
 
             DataTable dt = utilsIngres.getSql(testSelect);
             dgvTest.DataSource = dt;
         }
+
+
+
     }
 }
