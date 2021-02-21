@@ -48,7 +48,7 @@ namespace PPUG
         {
             
             //// -> ToDo - umbau zu utils.saveToCsv
-            var csvData =  utils.stringToCsv((DataTable)dgvTest.DataSource);
+            var csvData =  utils.DatatableToCsv((DataTable)dgvTest.DataSource);
             MessageBox.Show(csvData);
             File.WriteAllText(tbCsvPath.Text, csvData);
         }

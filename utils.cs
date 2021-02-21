@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace PPUG
 {
@@ -24,7 +25,13 @@ namespace PPUG
         {
             try
             {
-                return System.IO.File.ReadAllText(p.InFile);
+
+                string SQlDate = DateTime.Today.AddDays(-1).ToString("d");
+                
+
+                string strFromFile = System.IO.File.ReadAllText(p.InFile);               
+
+                return strFromFile.Replace("$BDGPC_STARTDATE", SQlDate);
 
             }
             catch (Exception ex)
@@ -41,58 +48,59 @@ namespace PPUG
         /// </summary>
         /// <param name="_toSaveString"></param>
         /// <returns></returns>
-        public bool saveToCSV(string _toSaveString)
+        public void saveToCSV(string _toSaveString, string destFile)
         {
             try
             {
-                return true;
+                File.WriteAllText(destFile, _toSaveString);
+
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
-                
+                MessageBox.Show(ex.Message);
             }
         }
 
-        public string stringToCsv(DataTable dataTable)
+
+        public static string RemoveFirstLine(string input)
         {
-            StringBuilder sbData = new StringBuilder();
-
-            // Only return Null if there is no structure.
-            if (dataTable.Columns.Count == 0)
-                return null;
-
-
-            //Header
-            foreach (var col in dataTable.Columns)
-            {
-                if (col == null)
-                    sbData.Append(";");
-                //  else  // Values in "
-                //      sbData.Append("\"" + col.ToString().Replace("\"", "\"\"") + "\",");
-            }
-
-            sbData.Replace(",", System.Environment.NewLine, sbData.Length - 1, 1);
-
-            foreach (DataRow dr in dataTable.Rows)
-            {
-                foreach (var column in dr.ItemArray)
-                {
-                    if (column == null)
-                        sbData.Append(";");
-                    //  else  // Values in "
-                    // sbData.Append("\"" + column.ToString().Replace("\"", "\"\"") + "\",");
-                }
-                sbData.Replace(";", System.Environment.NewLine, sbData.Length - 1, 1);
-            }
-
-
-            // sbData enthält die spaltentitel - hier entferne die erste Zeile
-            var lines = sbData.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lines = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             return string.Join(Environment.NewLine, lines.Skip(1));
+        }
 
-            //string res = sbData.ToString().Substring(sbData.ToString().IndexOf(Environment.NewLine) + 1);
-            //eturn res;
+        public string DatatableToCsv(DataTable dataTable)
+        {
+
+            //checked for the datatable dtCSV not empty
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                // create object for the StringBuilder class
+                StringBuilder sb = new StringBuilder();
+
+                // Get name of columns from datatable and assigned to the string array
+                string[] columnNames = dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName).ToArray();
+
+                // Create comma sprated column name based on the items contains string array columnNames
+                sb.AppendLine(string.Join(";", columnNames));
+
+                // Fatch rows from datatable and append values as comma saprated to the object of StringBuilder class 
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    // encapsulate fields in ""
+                    //IEnumerable<string> fields = row.ItemArray.Select(field => string.Concat("\"", field.ToString().Replace("\"", "\"\""), "\""));
+                    // dont encapsulate
+                    IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
+
+                    sb.AppendLine(string.Join(";", fields));
+                }
+
+               //MessageBox.Show(RemoveFirstLine(sb.ToString()));
+                return RemoveFirstLine(sb.ToString());
+            }
+            else
+                return null;
+                
         }
 
     }

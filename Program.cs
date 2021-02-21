@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,14 +21,14 @@ namespace PPUG
         {
             p = new Parameters();
             p = init(p);
-            utilsIngres = new UtilsIngres(p);
-            utils = new Utils(p, utilsIngres);
+
 
             // ppug.exe medico.cfg -i ppug.sql -o outfile.csv
 
             // caled without parameters -> start GUI
             if (args.Length == 0)
             {
+                init(p);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new Form1(p, utils, utilsIngres));
@@ -41,9 +42,16 @@ namespace PPUG
             else
             {
                 processArgs(args);
-                
+
+                init(p);
+
                 string SQLCommand = utils.getSQLSelect();
-                MessageBox.Show(SQLCommand);
+                //MessageBox.Show(SQLCommand);
+
+                DataTable dt = utilsIngres.getSql(SQLCommand);
+                if (dt != null)
+                    utils.saveToCSV(utils.DatatableToCsv(dt), p.OutFile);
+
             }
 
         }
@@ -76,6 +84,9 @@ namespace PPUG
             p.DbUser = "dps";
             p.DbPasswd = "dps1991";
             p.DbDatabase = "nt_fri";
+
+            utilsIngres = new UtilsIngres(p);
+            utils = new Utils(p, utilsIngres);
 
             return p;
 
