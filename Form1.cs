@@ -17,12 +17,14 @@ namespace PPUG
 
         private Parameters p;
         private UtilsIngres utilsIngres;
-        public Form1(Parameters p, UtilsIngres utilsIngres)
+        private Utils utils;
+        public Form1(Parameters p, Utils utils, UtilsIngres utilsIngres)
         {
             InitializeComponent();
 
             this.p = p;
             this.utilsIngres = utilsIngres;
+            this.utils = utils;
             tbCsvPath.Text = Application.StartupPath.ToString() + @"\export.csv";
 
         }
@@ -44,7 +46,9 @@ namespace PPUG
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var csvData = utilsIngres.ToCsv((DataTable)dgvTest.DataSource);
+            
+            //// -> ToDo - umbau zu utils.saveToCsv
+            var csvData =  utils.stringToCsv((DataTable)dgvTest.DataSource);
             MessageBox.Show(csvData);
             File.WriteAllText(tbCsvPath.Text, csvData);
         }

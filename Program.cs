@@ -11,6 +11,7 @@ namespace PPUG
 
         private static Parameters p;
         private static Utils utils;
+        private static UtilsIngres utilsIngres;
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
@@ -19,7 +20,8 @@ namespace PPUG
         {
             p = new Parameters();
             p = init(p);
-            UtilsIngres utilsIngres = new UtilsIngres(p);
+            utilsIngres = new UtilsIngres(p);
+            utils = new Utils(p, utilsIngres);
 
             // ppug.exe medico.cfg -i ppug.sql -o outfile.csv
 
@@ -28,7 +30,7 @@ namespace PPUG
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1(p, utilsIngres));
+                Application.Run(new Form1(p, utils, utilsIngres));
             } 
             // if not 5 args are given or second not -i or fourth not -o
             else if (args.Length != 5 || args[1] != "-i"  || args[3] != "-o" )
@@ -39,10 +41,11 @@ namespace PPUG
             else
             {
                 processArgs(args);
-                utils = new Utils(p, utilsIngres);
-
+                
+                string SQLCommand = utils.getSQLSelect();
+                MessageBox.Show(SQLCommand);
             }
-            
+
         }
 
         private static void processArgs(string[] args)
@@ -52,7 +55,7 @@ namespace PPUG
                 string ConnectionString = System.IO.File.ReadAllText(args[0]);
 
                 p.DbConnectionString = ConnectionString.Replace("ConnectionString=", "");
-                MessageBox.Show(p.DbConnectionString);
+                //MessageBox.Show(p.DbConnectionString);
 
                 p.InFile = args[2];
                 p.OutFile = args[4];
