@@ -14,6 +14,10 @@ namespace PPUG
 
         }
 
+        private string dbConnectionString;
+
+        private string inFile;
+        private string outFile;
 
         private string dbHost;
         private string dbUser;
@@ -24,5 +28,8 @@ namespace PPUG
         public string DbUser { get => dbUser; set => dbUser = value; }
         public string DbPasswd { get => dbPasswd; set => dbPasswd = value; }
         public string DbDatabase { get => dbDatabase; set => dbDatabase = value; }
+        public string DbConnectionString { get => dbConnectionString; set => dbConnectionString = value; }
+        public string InFile { get => inFile; set => inFile = value; }
+        public string OutFile { get => outFile; set => outFile = value; }
     }
 }

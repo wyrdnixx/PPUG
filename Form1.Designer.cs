@@ -32,6 +32,8 @@
             this.btnTest = new System.Windows.Forms.Button();
             this.dgvTest = new System.Windows.Forms.DataGridView();
             this.tbSQL = new System.Windows.Forms.TextBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.tbCsvPath = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTest)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,11 +64,30 @@
             this.tbSQL.TabIndex = 2;
             this.tbSQL.Text = resources.GetString("tbSQL.Text");
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(1252, 520);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // tbCsvPath
+            // 
+            this.tbCsvPath.Location = new System.Drawing.Point(614, 522);
+            this.tbCsvPath.Name = "tbCsvPath";
+            this.tbCsvPath.Size = new System.Drawing.Size(632, 20);
+            this.tbCsvPath.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1339, 855);
+            this.Controls.Add(this.tbCsvPath);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbSQL);
             this.Controls.Add(this.dgvTest);
             this.Controls.Add(this.btnTest);
@@ -83,6 +104,8 @@
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.DataGridView dgvTest;
         private System.Windows.Forms.TextBox tbSQL;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TextBox tbCsvPath;
     }
 }
 

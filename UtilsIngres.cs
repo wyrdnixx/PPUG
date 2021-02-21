@@ -21,11 +21,11 @@ namespace PPUG
 
         public UtilsIngres(Parameters p)
         {
-            ConnectionString = "Host = " + p.DbHost + "; Database = " + p.DbDatabase + "; Uid = " + p.DbUser + "; Pwd =" + p.DbPasswd + "; Date_format = GERMAN";
-            connection = new IngresConnection(ConnectionString);
+            //ConnectionString = "Host = " + p.DbHost + "; Database = " + p.DbDatabase + "; Uid = " + p.DbUser + "; Pwd =" + p.DbPasswd + "; Date_format = GERMAN";
+            // connection = new IngresConnection(ConnectionString);
+
+            connection = new IngresConnection(p.DbConnectionString);
         }
-
-
 
         public DataTable getSql(String sqlSelect)
         {
@@ -62,6 +62,49 @@ namespace PPUG
                 connection.Close();
             }
             
+        }
+
+
+
+        public string ToCsv( DataTable dataTable)
+        {
+            StringBuilder sbData = new StringBuilder();
+
+            // Only return Null if there is no structure.
+            if (dataTable.Columns.Count == 0)
+                return null;
+
+
+            //Header
+            foreach (var col in dataTable.Columns)
+            {
+                if (col == null)
+                    sbData.Append(";");
+              //  else  // Values in "
+              //      sbData.Append("\"" + col.ToString().Replace("\"", "\"\"") + "\",");
+            }
+
+            sbData.Replace(",", System.Environment.NewLine, sbData.Length - 1, 1);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                foreach (var column in dr.ItemArray)
+                {
+                    if (column == null)
+                        sbData.Append(";");
+                    //  else  // Values in "
+                    // sbData.Append("\"" + column.ToString().Replace("\"", "\"\"") + "\",");
+                }
+                sbData.Replace(";", System.Environment.NewLine, sbData.Length - 1, 1);
+            }
+
+
+            // sbData enthält die spaltentitel - hier entferne die erste Zeile
+            var lines = sbData.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            return string.Join(Environment.NewLine, lines.Skip(1));
+
+            //string res = sbData.ToString().Substring(sbData.ToString().IndexOf(Environment.NewLine) + 1);
+            //eturn res;
         }
     }
 }
