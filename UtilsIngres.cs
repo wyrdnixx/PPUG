@@ -4,10 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Ingres.Client;
 
-namespace PPUG
+namespace PPUGv2
 {
     public class UtilsIngres
     {
@@ -53,7 +52,7 @@ namespace PPUG
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ingCmd.CommandText + "\n\n" + ex.Message);
+                Console.WriteLine(ingCmd.CommandText + "\n\n" + ex.Message);
                 //throw;
                 return null;
             }

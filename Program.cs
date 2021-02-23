@@ -2,42 +2,35 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace PPUG
+namespace PPUGv2
 {
-    static class Program
+    class Program
     {
 
         private static Parameters p;
         private static Utils utils;
         private static UtilsIngres utilsIngres;
-        /// <summary>
-        /// Der Haupteinstiegspunkt für die Anwendung.
-        /// </summary>
-        [STAThread]
+
+
         static void Main(string[] args)
         {
             p = new Parameters();
             p = init(p);
 
+            Console.WriteLine("Programm gestartet...");
 
-            // ppug.exe medico.cfg -i ppug.sql -o outfile.csv
-
-            // caled without parameters -> start GUI
             if (args.Length == 0)
             {
-                init(p);
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1(p, utils, utilsIngres));
-            } 
+                // ToDo: Info ausgeben
+            }
             // if not 5 args are given or second not -i or fourth not -o
-            else if (args.Length != 5 || args[1] != "-i"  || args[3] != "-o" )
+            else if (args.Length != 5 || args[1] != "-i" || args[3] != "-o")
             {
-                MessageBox.Show("wrong parameters... \n use: \n ppug.exe medico.cfg -i ppug.sql -o outfile.csv");
-            } 
+               Console.WriteLine("wrong parameters... \n use: \n ppug.exe medico.cfg -i ppug.sql -o outfile.csv");
+            }
             // correct parameters given
             else
             {
@@ -56,6 +49,7 @@ namespace PPUG
 
         }
 
+
         private static void processArgs(string[] args)
         {
             try
@@ -70,14 +64,13 @@ namespace PPUG
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Fehler beim starten: \n" + ex.Message);
+                Console.WriteLine("Fehler beim starten: \n" + ex.Message);
                 throw;
             }
-            
+
         }
 
 
-      
         private static Parameters init(Parameters p)
         {
             p.DbHost = "medico-mcb";
@@ -93,14 +86,5 @@ namespace PPUG
         }
 
 
-
-
     }
-
-
-
-
-
-
 }
-

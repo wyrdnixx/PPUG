@@ -18,7 +18,7 @@ x1102sta.pat,
 from x1102sta
  left join x8103wds on x1102sta.wds = x8103wds.wds
  left join x1100pat on x1102sta.pat = x1100pat.pat
-where x8103wds.deslong like 'TimeOfficeKey:7%'
+where x8103wds.deslong like 'TimeOfficeKey:%'
  and x1100pat.cha in ('FP','KOMP','S','SGL','T-S','T-SGL')
   and x1102sta.pat not in
   (select pat from x1100pat 

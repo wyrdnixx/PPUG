@@ -4,10 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
 
-namespace PPUG
+namespace PPUGv2
 {
     public class Utils
     {
@@ -36,7 +35,7 @@ namespace PPUG
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error : "+  ex.Message);
+                //MessageBox.Show("Error : "+  ex.Message);
                 //throw ex;
                 return null;
                 
@@ -58,7 +57,7 @@ namespace PPUG
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
 
